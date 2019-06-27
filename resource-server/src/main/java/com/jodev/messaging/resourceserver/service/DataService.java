@@ -16,11 +16,6 @@ public class DataService {
   @Autowired
   private GridFsOperations gridOperations;
 
-  public String saveDbFile(File file) throws FileNotFoundException {
-    String id = gridOperations.store(new FileInputStream(file), file.getName()).toString();
-    return id;
-  }
-
   public InputStream getFileFromDB(String id) throws IOException {
     GridFSFile file = gridOperations.findOne(new Query(Criteria.where("_id").is(id)));
     GridFsResource resource = gridOperations.getResource(file);
