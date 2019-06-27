@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: resource-server
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: admin
+      database: mmdb
+  rabbitmq:
+    host: localhost
+    port: 5672
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: files-in
+          content-type: application/json
+        input:
+          destination: files-out
+          content-type: application/json
+      rabbit:
+        bindings:
+          output:
+            producer:
+              exchangeType: direct
+              routingKeyExpression: '"#"'
+
+servlet:
+  multipart:
+    enabled: true
+
+server:
+  port: 9000
+
+logging:
+  level:
+    root: INFO
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+  instance:
+    hostname: localhost
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: ALWAYS

@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: client
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: admin
+      database: mmdb
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: files-out
+          content-type: application/json
+        input:
+          destination: files-in
+          content-type: application/json
+        rabbit:
+          bindings:
+            input:
+              consumer:
+                exchangeType: direct
+
+
+logging:
+  level:
+    root: INFO
+
+server:
+  port: 8072
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+  instance:
+    hostname: localhost
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
